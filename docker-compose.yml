@@ -1,0 +1,50 @@
+version: '3.9'
+ 
+services:
+  # Apache webserver service
+  webserver:
+    container_name: PHP-webServer
+    build:
+      # Dockerfile path
+      context: .
+      dockerfile: ./php/Dockerfile  
+    # Mount the local ./app directory to /var/www/html in the container
+    volumes:
+      - ./html:/var/www/html 
+    # Map port 8000 on the host to port 80 on the container 
+    ports:
+      - 80:80 
+    networks:
+      - my_network
+ 
+  # MySQL service
+  mysql:
+    container_name: mysql-db
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example_password
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./create_table.sql:/docker-entrypoint-initdb.d/create_table.sql # Montar el archivo SQL en el directorio de inicio de MySQL
+    networks:
+      - my_network
+ 
+  # phpMyAdmin service
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: example_password
+    networks:
+      - my_network
+ 
+networks:
+  my_network:
