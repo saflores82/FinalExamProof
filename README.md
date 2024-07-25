@@ -50,11 +50,34 @@ docker-compose build
 
 docker-compose up -d
 
+# MySQL 
+
+sudo yum install https://dev.mysql.com/get/mysql80-community-release-el9-5.noarch.rpm
+sudo yum install mysql-community-server
+sudo systemctl enable --now mysqld
+sudo mysql_secure_installation
+mysql
+mysql -h mysql
+docker ps
+mysql -h localhost:3306
+mysql -h 0.0.0.0:3306
+mysql -h 0.0.0.0:3306 -u mysql
+docker exec -it 86411fb0de66 -- bash
+docker exec -it 86411fb0de66 -- /bin/bash
+docker exec -it 86411fb0de66 -- /bin/sh
+mysql -h localhost -P 3306 --protocol=tcp -u root
+mysql -h localhost -P 3306 --protocol=tcp -u admin
+ls
+cat docker-compose.yml 
+mysql -h localhost -P 3306 --protocol=tcp -u user
+mysql -h localhost -P 3306 --protocol=tcp -u user -p
+mysql -h localhost -P 3306 --protocol=tcp -u root -p
+
 ----------------------------------------------------------------------------------------
 
 Para adaptar el proyecto de Docker Compose a Terraform y desplegarlo en AWS utilizando los recursos gestionados por Terraform, debemos seguir estos pasos:
 
-Configurar AWS CLI y Terraform
+# Configurar AWS CLI y Terraform
 
 Definir la infraestructura en Terraform
 
